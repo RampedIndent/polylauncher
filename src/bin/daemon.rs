@@ -11,7 +11,7 @@ use xshell::{cmd, Shell};
 
 mod common;
 use common::*;
-mod xrandr;
+// mod xrandr;
 
 fn create_app_lock(port: u16) -> Result<TcpListener> {
     for _ in 0..3 {
@@ -49,7 +49,7 @@ fn main() -> Result<()> {
     let lock_address = lock_socket.local_addr()?;
 
     ctrlc::set_handler(move || {
-        warn!("\nreceived Ctrl+C!");
+        warn!("received Ctrl+C!");
 
         let mut stream = TcpStream::connect(lock_address)
             .expect("Failed to connect to socket to terminate program");
