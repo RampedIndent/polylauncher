@@ -1,7 +1,7 @@
 ---
 branch: main
-# preset: "angular"
-# tagFormat: "${version}"
+preset: "angular"
+tagFormat: "${version}"
 plugins:
   - "@semantic-release/commit-analyzer"
   - "@semantic-release/release-notes-generator"
