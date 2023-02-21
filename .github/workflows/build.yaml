@@ -14,7 +14,6 @@ on:
 jobs:
   check:
     name: check
-    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -33,3 +32,4 @@ jobs:
           components: clippy, rustfmt
       - uses: Swatinem/rust-cache@v1
       - run: cargo check
+ 
