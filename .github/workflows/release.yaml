@@ -12,6 +12,8 @@ on:
   #     - "**.org"
 
 jobs:
+  get-next-version:
+    uses: semantic-release-action/next-release-version/.github/workflows/next-release-version.yml@v4
   check:
     name: check
     strategy:
@@ -37,29 +39,103 @@ jobs:
       contents: write
       issues: write
       pull-requests: write
-    runs-on: ubuntu-latest
+    name: Build CLI ${{ matrix.build.target }}
+    if: needs.get-next-version.outputs.new-release-published == 'true'
+    runs-on: ${{ matrix.build.os }}
+    needs:
+      - get-next-version
     env:
-      PROJECT_NAME: rust-template
+      CARGO: cargo
+
+    strategy:
+      matrix:
+        build:
+          # alphabatized by target
+          # - os: macOS-latest
+          #   target: aarch64-apple-darwin
+          #   cross: true
+          # - os: ubuntu-latest
+          #   target: aarch64-unknown-linux-gnu
+          #   cross: true
+          # - os: ubuntu-latest
+          #   target: aarch64-unknown-linux-musl
+          #   cross: true
+          # - os: ubuntu-latest
+          #   target: i686-unknown-linux-gnu
+          #   cross: true
+          # - os: ubuntu-latest
+          #   target: i686-unknown-linux-musl
+          #   cross: true
+          # - os: macOS-latest
+          #   target: x86_64-apple-darwin
+          #   cross: false
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            cross: false
+          # - os: ubuntu-latest
+          #   target: x86_64-unknown-linux-musl
+          #   cross: false
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Semantic Release # More information https://github.com/cycjimmy/semantic-release-action
-        uses: cycjimmy/semantic-release-action@v3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Install build inputs
+        if: runner.os == 'Linux' && !matrix.build.cross
+        run: sudo apt install musl-tools
+        
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@master
+        id: rust-toolchain
         with:
-          semantic_version: 16
-          # you can set branches for semantic-release above v16.
-          branches: |
-            [
-              'main',
-              {
-                name: 'beta',
-                prerelease: true
-              },
-              {
-                name: 'alpha',
-                prerelease: true
-              }
-            ]
+          toolchain: stable
+          target: ${{ matrix.build.target }}
+
+      - name: Cache cargo
+        uses: actions/cache@v3
+        id: cache-cargo
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ steps.rust-toolchain.outputs.cachekey }}-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install semantic-release-cargo
+        uses: taiki-e/install-action@v2
+        with:
+          tool: semantic-release-cargo@2
+
+      - name: Prepare semantic-release for Rust
+        run: semantic-release-cargo prepare ${{ needs.get-next-version.outputs.new-release-version }}
+
+      - name: Install cross
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cross
+
+      - name: Configure cross
+        if: matrix.build.cross
+        run: echo "CARGO=cross" >> "$GITHUB_ENV"
+
+      - name: Compile release binary
+        run: ${{ env.CARGO }} build --bin semantic-release-cargo --release --target ${{ matrix.build.target }} --verbose
+
+      - name: Create release archive
+        run: |
+          mkdir dist
+          cp target/${{ matrix.build.target }}/release/semantic-release-cargo dist/semantic-release-cargo-${{ matrix.build.target }}
+      - name: Create binary checksum
+        run: shasum --algorithm 256 --binary semantic-release-cargo-${{ matrix.build.target }} | tee semantic-release-cargo-${{ matrix.build.target }}-SHA256SUM.txt
+        working-directory: ./dist
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.build.target }}
+          path: |
+            dist/semantic-release-cargo-${{ matrix.build.target }}
+            dist/semantic-release-cargo-${{ matrix.build.target }}-SHA256SUM.txt
+          if-no-files-found: error
+          retention-days: 1
