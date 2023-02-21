@@ -27,8 +27,9 @@ jobs:
           mv $PROJECT_NAME ${{ runner.temp }}/
           cd ${{ runner.temp }}/$PROJECT_NAME
           cargo check
+      
       - name: Semantic Release # More information https://github.com/cycjimmy/semantic-release-action
         uses: cycjimmy/semantic-release-action@v3
-        # env:
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
