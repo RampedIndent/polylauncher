@@ -12,19 +12,24 @@ on:
       - "**.org"
 
 jobs:
-  build:
+  check:
+    name: check
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [ 'ubuntu-latest']
+    runs-on: ${{ matrix.version }}
     env:
       PROJECT_NAME: polylauncher
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
+      - name: setup | rust
+        uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      # we need to move the generated project to a temp folder, away from the template project
-      # otherwise `cargo` runs would fail 
-      # see https://github.com/rust-lang/cargo/issues/9922
-      - run: |
-          mv $PROJECT_NAME ${{ runner.temp }}/
-          cd ${{ runner.temp }}/$PROJECT_NAME
-          cargo check
+          default: true
+          profile: minimal
+          components: clippy, rustfmt
+      - uses: Swatinem/rust-cache@v1
+      - run: cargo check
