@@ -1,0 +1,34 @@
+name: Release
+on:
+  # https://docs.github.com/en/actions/reference/events-that-trigger-workflows#workflow_dispatch
+  workflow_dispatch:
+  # schedule:
+    # - cron: '0 18 * * 5'
+  # push:
+  #   branches: [ '*' ]
+  #   paths-ignore:
+  #     - "**/docs/**"
+  #     - "**.md"
+  #     - "**.org"
+
+jobs:
+  release:
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_NAME: rust-template
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - run: |
+          mv $PROJECT_NAME ${{ runner.temp }}/
+          cd ${{ runner.temp }}/$PROJECT_NAME
+          cargo check
+      - name: Semantic Release # More information https://github.com/cycjimmy/semantic-release-action
+        uses: cycjimmy/semantic-release-action@v3
+        # env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
