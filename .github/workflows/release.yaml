@@ -16,6 +16,20 @@ jobs:
     permissions:
       contents: write
     uses: semantic-release-action/next-release-version/.github/workflows/next-release-version.yml@v4
+    with:
+      # you can set branches for semantic-release above v16.
+      branches: |
+        [
+          'main',
+          {
+            name: 'beta',
+            prerelease: true
+          },
+          {
+            name: 'alpha',
+            prerelease: true
+          }
+        ]
   check:
     name: check
     strategy:
