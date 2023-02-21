@@ -15,7 +15,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      PROJECT_NAME: rust-template
+      PROJECT_NAME: polylauncher
     steps:
       - uses: actions/checkout@v3
       - uses: actions-rs/toolchain@v1
