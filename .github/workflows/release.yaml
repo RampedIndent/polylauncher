@@ -127,9 +127,9 @@ jobs:
       - name: Create release archive
         run: |
           mkdir dist
-          cp target/${{ matrix.build.target }}/release/semantic-release-cargo dist/semantic-release-cargo-${{ matrix.build.target }}
+          cp target/${{ matrix.build.target }}/release/daemon dist/daemon-${{ matrix.build.target }}
       - name: Create binary checksum
-        run: shasum --algorithm 256 --binary semantic-release-cargo-${{ matrix.build.target }} | tee semantic-release-cargo-${{ matrix.build.target }}-SHA256SUM.txt
+        run: shasum --algorithm 256 --binary daemon-${{ matrix.build.target }} | tee daemon-${{ matrix.build.target }}-SHA256SUM.txt
         working-directory: ./dist
 
       - name: Upload release artifacts
@@ -137,7 +137,7 @@ jobs:
         with:
           name: ${{ matrix.build.target }}
           path: |
-            dist/semantic-release-cargo-${{ matrix.build.target }}
-            dist/semantic-release-cargo-${{ matrix.build.target }}-SHA256SUM.txt
+            dist/daemon-${{ matrix.build.target }}
+            dist/daemon-${{ matrix.build.target }}-SHA256SUM.txt
           if-no-files-found: error
           retention-days: 1
