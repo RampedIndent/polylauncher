@@ -1,6 +1,9 @@
 [[https://github.com/RampedIndent/polylauncher/actions/workflows/build.yaml][https://github.com/RampedIndent/polylauncher/actions/workflows/build.yaml/badge.svg]] [[https://github.com/RampedIndent/polylauncher/actions/workflows/release.yaml][https://github.com/RampedIndent/polylauncher/actions/workflows/release.yaml/badge.svg]] 
 * PolyLauncher repo
 Polylauncher is an unoffical launcher for polybar, it's aim is to replace bash launch scripts for polybar by, allowing for a launcher to that is configured by a yaml file(Gui editor in development). It allows for easy integration into a dotfiles by allowing configurations to be assigned to the hostname of the computer.
+
+The bars are launched by setting the barnames by the names of the bar in the pollybvar config file.
+
 #+begin_src yaml
   ---
   config_version: 1

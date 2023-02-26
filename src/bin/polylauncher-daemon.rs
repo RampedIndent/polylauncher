@@ -70,7 +70,7 @@ fn main() -> Result<()> {
                 let display = monitor.display;
                 info!("{display:?}");
                 let barname = monitor.bar_name;
-                let config = "~/.config/polybar/config.ini";
+                let config = &cfg.polybar_config;
                 cmd!(sh, "polybar --reload {barname} -c {config}")
                     .env("MONITOR", display)
                     // .env("FC_DEBUG", "1")

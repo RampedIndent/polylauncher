@@ -32,6 +32,7 @@ pub struct ComputerConfig {
 #[derive(Serialize, Deserialize)] // we'll be cloning it later on
 pub struct MyConfig {
     pub config_version: u8,
+    pub polybar_config: String,
     pub computers: HashMap<String, ComputerConfig>, // the hash map owns the struct
 }
 
@@ -39,7 +40,7 @@ impl MyConfig {
     pub fn new() -> MyConfig {
         MyConfig {
             computers: HashMap::new(),
-            config_version: 1,
+            ..Default::default()
         }
     }
 
@@ -85,6 +86,7 @@ impl ::std::default::Default for MyConfig {
     fn default() -> Self {
         Self {
             config_version: 1,
+            polybar_config: "~/.config/polybar/config.ini".to_string(),
             computers: HashMap::new(),
         }
     }
