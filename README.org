@@ -1,7 +1,3 @@
 [[https://github.com/RampedIndent/polylauncher/actions/workflows/build.yaml][https://github.com/RampedIndent/polylauncher/actions/workflows/build.yaml/badge.svg]] [[https://github.com/RampedIndent/polylauncher/actions/workflows/release.yaml][https://github.com/RampedIndent/polylauncher/actions/workflows/release.yaml/badge.svg]] 
 * Rust project template repo
 This is just a template rust project for the cargo generate command
-
-#+begin_src bash
-  cargo generate RampedIndent/rust-template
-#+end_src
