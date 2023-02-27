@@ -154,6 +154,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
+          persist-credentials: false
           # Fetch all history and tags for calculating next semantic version
           fetch-depth: 0
 
