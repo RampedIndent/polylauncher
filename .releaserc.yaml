@@ -9,11 +9,11 @@ plugins:
   - "@semantic-release/changelog"
   - "@semantic-release/git"
   - "@semantic-release/github"
-  # - "@semantic-release-cargo/semantic-release-cargo"
+  - "@semantic-release-cargo/semantic-release-cargo"
   # - "semantic-release-github-actions-tags"
-# verifyConditions:
-#   - '@semantic-release/git'
-#   - "@semantic-release/github"
+verifyConditions:
+  - '@semantic-release/git'
+  - "@semantic-release/github"
 analyzeCommits:
   - path: "@semantic-release/commit-analyzer"
     releaseRules:
@@ -60,15 +60,15 @@ generateNotes:
     - type: "test"
     - hidden: true
     presetConfig: true
-# prepare:
-#   - path: "@semantic-release/git"
-#   - path: "@semantic-release/changelog"
-#     changelogFile: "docs/CHANGELOG.md"
-# publish:
-#   - path: "@semantic-release/github"
+prepare:
+  - path: "@semantic-release/git"
+  - path: "@semantic-release/changelog"
+    changelogFile: "docs/CHANGELOG.md"
+publish:
+  - path: "@semantic-release/github"
 
-# success:
-#   - "@semantic-release/github"
+success:
+  - "@semantic-release/github"
 
-# fail:
-#   - "@semantic-release/github"
+fail:
+  - "@semantic-release/github"
