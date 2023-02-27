@@ -137,8 +137,8 @@ jobs:
         with:
           name: ${{ matrix.build.target }}
           path: |
-            dist/daemon-${{ matrix.build.target }}
-            dist/daemon-${{ matrix.build.target }}-SHA256SUM.txt
+            dist/polylauncher-daemon-${{ matrix.build.target }}
+            dist/polylauncher-daemon-${{ matrix.build.target }}-SHA256SUM.txt
           if-no-files-found: error
           retention-days: 1
   release:
