@@ -7,6 +7,7 @@ The bars are launched by setting the barnames by the names of the bar in the pol
 #+begin_src yaml
   ---
   config_version: 1
+  polybar_config: ~/.config/polybar/config.ini
   computers:
     Edith: # <- hostname 
       displays:
