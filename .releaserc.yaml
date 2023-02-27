@@ -9,7 +9,7 @@ plugins:
   - "@semantic-release/changelog"
   - "@semantic-release/git"
   - "@semantic-release/github"
-  - "@semantic-release-cargo/semantic-release-cargo"
+  # - "@semantic-release-cargo/semantic-release-cargo"
   # - "semantic-release-github-actions-tags"
 # verifyConditions:
 #   - '@semantic-release/git'
