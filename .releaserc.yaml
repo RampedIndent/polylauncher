@@ -7,11 +7,15 @@ plugins:
   - "@semantic-release/commit-analyzer"
   - "@semantic-release/release-notes-generator"
   - "@semantic-release/changelog"
-  - "@semantic-release/git"
+  - - "@semantic-release/git"
+    - assets:
+      - CHANGELOG.md
   - - "@semantic-release/github"
     - assets:
-      - polylauncher-daemon
-      - dist/**
+      - path: polylauncher-daemon
+        label: Polylauncher Bin
+      - path: dist/SHA256SUMS.txt
+        label: SHA256SUMS.txt
   # - "@semantic-release-cargo/semantic-release-cargo"
   # - "semantic-release-github-actions-tags"
 verifyConditions:
