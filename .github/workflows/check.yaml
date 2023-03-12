@@ -1,4 +1,4 @@
-name: Build
+name: Check
 on:
   # https://docs.github.com/en/actions/reference/events-that-trigger-workflows#workflow_dispatch
   workflow_dispatch:
@@ -11,6 +11,7 @@ on:
       - "**.md"
       - "**.org"
       - ".github/**"
+      - ".releaserc.yaml"
 
 jobs:
   check:
