@@ -2,14 +2,6 @@ name: Release
 on:
   # https://docs.github.com/en/actions/reference/events-that-trigger-workflows#workflow_dispatch
   workflow_dispatch:
-  # schedule:
-    # - cron: '0 18 * * 5'
-  # push:
-  #   branches: [ '*' ]
-  #   paths-ignore:
-  #     - "**/docs/**"
-  #     - "**.md"
-  #     - "**.org"
 
 jobs:
   get-next-version:
@@ -176,23 +168,6 @@ jobs:
             target/
           key: ${{ runner.os }}-cargo-${{ steps.rust-toolchain.outputs.cachekey }}-${{ hashFiles('**/Cargo.lock') }}
 
-      # - name: Setup Node.js
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: lts/*
-      #     check-latest: true
-      #     cache: npm
-
-      # - name: Cache npm dependencies
-      #   uses: actions/cache@v3
-      #   id: cache-node-modules
-      #   with:
-      #     path: node_modules
-      #     key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-
-      # - name: Install dependencies
-      #   if: steps.cache-node-modules.outputs.cache-hit != 'true'
-      #   run: npm ci --ignore-scripts --loglevel error
 
       - name: Download release artifacts
         uses: actions/download-artifact@v3
@@ -202,26 +177,11 @@ jobs:
       - name: ls artifacts
         run: ls -R ./artifacts
 
-      # - name: Prepare native artifacts
-      #   run: |
-      #     mkdir napi/
-      #     mv artifacts/bindings-aarch64-apple-darwin/semantic-release-cargo.darwin-arm64.node napi/
-      #     mv artifacts/bindings-x86_64-apple-darwin/semantic-release-cargo.darwin-x64.node napi/
-      #     mv artifacts/bindings-x86_64-unknown-linux-gnu/semantic-release-cargo.linux-x64-gnu.node napi/
-      # - name: ls napi
-      #   run: ls -R ./napi
 
       - name: Prepare GitHub Release artifacts
         run: |
           mkdir dist/
-          # mv artifacts/aarch64-apple-darwin dist/
-          # mv artifacts/aarch64-unknown-linux-gnu dist/
-          # mv artifacts/aarch64-unknown-linux-musl dist/
-          # mv artifacts/i686-unknown-linux-gnu dist/
-          # mv artifacts/i686-unknown-linux-musl dist/
-          # mv artifacts/x86_64-apple-darwin dist/
           mv artifacts/x86_64-unknown-linux-gnu dist/
-          # mv artifacts/x86_64-unknown-linux-musl dist/
       - name: Combine checksums
         run: cat dist/**/polylauncher-daemon-*-SHA256SUM.txt | tee dist/SHA256SUMS.txt
 
@@ -235,7 +195,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
           
-          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         with:
           # You can specify specifying version range for the extra plugins if you prefer.
           extra_plugins: |
