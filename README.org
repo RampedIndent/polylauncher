@@ -1,4 +1,4 @@
-[[https://github.com/RampedIndent/polylauncher/actions/workflows/check.yaml][https://github.com/RampedIndent/polylauncher/actions/workflows/check.yaml/badge.svg]] [[https://github.com/RampedIndent/polylauncher/actions/workflows/release.yaml][https://github.com/RampedIndent/polylauncher/actions/workflows/release.yaml/badge.svg]] 
+[[https://github.com/RampedIndent/polylauncher/actions/workflows/check.yaml][https://github.com/RampedIndent/polylauncher/actions/workflows/check.yaml/badge.svg]] [[https://github.com/RampedIndent/polylauncher/actions/workflows/release.yaml][https://github.com/RampedIndent/polylauncher/actions/workflows/release.yaml/badge.svg]] [[https://github.com/RampedIndent/polylauncher/releases][https://img.shields.io/github/downloads/RampedIndent/polylauncher/total.svg]]
 * PolyLauncher repo
 Polylauncher is an unoffical launcher for polybar, it's aim is to replace bash launch scripts for polybar by, allowing for a launcher to that is configured by a yaml file(Gui editor in development). It allows for easy integration into a dotfiles by allowing configurations to be assigned to the hostname of the computer.
 
