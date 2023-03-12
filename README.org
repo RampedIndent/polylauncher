@@ -22,3 +22,18 @@ The bars are launched by setting the barnames by the names of the bar in the pol
         - display: HDMI-0
           bar_name: mainbar-bspwm
 #+end_src
+* Installation
+Download the bin into you dotfiles and make it executable
+#+begin_src shell
+  wget https://github.com/RampedIndent/polylauncher/releases/download/1.0.0/polylauncher-daemon
+  mv polylauncher-daemon ~/dotfiles/bin
+  chmod +x ~/dotfiles/bin/polylauncher-daemon
+#+end_src
+
+Replace your existing launcher like so, in your auto start file
+#+begin_src bash
+  # $HOME/.config/polybar/launch.sh &
+  $HOME/dotfiles/bin/polylauncher-daemon &
+#+end_src
+
+And you are done.
