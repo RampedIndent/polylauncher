@@ -9,6 +9,8 @@ plugins:
   - - "@semantic-release/git"
     - assets:
       - CHANGELOG.md
+      - Cargo.toml
+      - Cargo.lock
   - - "@semantic-release/github"
     - assets:
       - path: polylauncher-daemon
